@@ -1,0 +1,26 @@
+// Select all the images on the page
+var images = document.querySelectorAll('img');
+
+// Loop through all the images and find the large one with specific intrinsic aspect ratio
+var largeImage = null;
+images.forEach(function(img) {
+    var width = img.naturalWidth;
+    var height = img.naturalHeight;
+
+    // Set the threshold for what you consider a "big" image (by size)
+    if (width > 1000 && height > 1000) {  // Modify these values based on your criteria
+        largeImage = img;
+    }
+});
+
+// If a large image is found, open the current source in a new tab
+if (largeImage) {
+    // Get the current source (full-size image link)
+    var currentSource = largeImage.src;
+    console.log('Opening Image Source in new tab:', currentSource);
+    
+    // Open the image in a new tab
+    window.open(currentSource, '_blank');
+} else {
+    console.log('No large image with the specified criteria found!');
+}

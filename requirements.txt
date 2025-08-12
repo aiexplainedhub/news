@@ -1,0 +1,9 @@
+ultralytics==8.3.156
+ultralytics-thop==2.0.14
+PyAutoGUI==0.9.53
+pillow==11.2.1
+mss==10.0.0
+pyperclip==1.8.2
+requests
+beautifulsoup4==4.12.3
+python-dotenv
