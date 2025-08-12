@@ -1,5 +1,4 @@
-Dockerfile
-startup.sh
+.env
 screenshots/
 debug/
 article_content/
