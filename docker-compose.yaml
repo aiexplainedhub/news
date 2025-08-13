@@ -1,0 +1,72 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+  # Your existing GUI app (uses your current Dockerfile/startup.sh)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - qdrant
+    entrypoint: ["/app/startup.sh"]     # do not change your working startup
+    environment:
+      # WordPress creds + RAG state (read by your agent or ragctl)
+      WP_BASE: https://squarereporter.com
+      WP_USER: ${WP_USER}
+      WP_APP_PWD: ${WP_APP_PWD}
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLL: sr_posts_dense
+      RAG_STATE_PATH: /app_state/rag_state.json
+      # GUI / Chrome
+      DISPLAY: ":1"
+      RESOLUTION: "2560x1440"
+    ports:
+      - "6080:6080"   # noVNC
+      - "5901:5901"   # VNC
+    volumes:
+      - ./:/app
+      - chrome_profile_data:/app/chrome-profile
+      - app_state:/app_state
+      - hf_cache:/root/.cache/huggingface
+
+  # Sidecar for indexing/search — no GUI, just Python
+  rag:
+    build:
+      context: .
+      dockerfile: Dockerfile.rag
+    depends_on:
+      - qdrant
+    working_dir: /app
+    entrypoint: ["/bin/bash","/app/rag-entrypoint.sh"]
+    environment:
+      WP_BASE: https://squarereporter.com
+      WP_USER: ${WP_USER}
+      WP_APP_PWD: ${WP_APP_PWD}
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLL: sr_posts_dense
+      RAG_STATE_PATH: /app_state/rag_state.json
+      HF_HOME: /root/.cache/huggingface
+    volumes:
+      - ./:/app
+      - app_state:/app_state
+      - hf_cache:/root/.cache/huggingface
+    # Optional: uncomment to request GPU (if you want it later)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+volumes:
+  qdrant_storage:
+  chrome_profile_data:
+  app_state:
+  hf_cache:

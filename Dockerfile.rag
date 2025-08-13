@@ -1,0 +1,17 @@
+FROM python:3.10-slim
+
+# Minimal system deps for RAG (no GUI/Chrome)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git curl build-essential ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install only RAG deps (separate from your app's big image)
+COPY requirements_rag.txt /tmp/requirements_rag.txt
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r /tmp/requirements_rag.txt
+
+# If you want GPU later, rebuild this image with:
+# RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu121 \
+#       torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0
