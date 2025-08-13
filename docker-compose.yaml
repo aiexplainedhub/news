@@ -1,0 +1,48 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - qdrant
+    entrypoint: ["/app/startup.sh"]
+    environment:
+      WP_BASE: https://squarereporter.com
+      WP_USER: ${WP_USER}
+      WP_APP_PWD: ${WP_APP_PWD}
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLL: sr_posts_dense
+      RAG_STATE_PATH: /app_state/rag_state.json
+      DISPLAY: ":1"
+      RESOLUTION: "2560x1440"
+      NVIDIA_VISIBLE_DEVICES: "all"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+    ports:
+      - "6080:6080"
+      - "5901:5901"
+    volumes:
+      - ./:/app
+      - chrome_profile_data:/app/chrome-profile
+      - app_state:/app_state
+      - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  qdrant_storage:
+  chrome_profile_data:
+  app_state:
+  hf_cache:
