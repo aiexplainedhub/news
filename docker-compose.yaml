@@ -14,7 +14,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - qdrant
-    entrypoint: ["/app/startup.sh"]     # do not change your working startup
     environment:
       # WordPress creds + RAG state (read by your agent or ragctl)
       WP_BASE: https://squarereporter.com

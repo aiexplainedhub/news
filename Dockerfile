@@ -3,8 +3,8 @@ FROM python:3.10-slim
 # ------------------ Install System Dependencies ------------------
 RUN apt-get update && apt-get install -y \
     curl gnupg git python3-tk python3-dev \
-    libx11-6 libxext6 libsm6 libxrender1 libgl1-mesa-glx \
-    libglib2.0-0 libgtk2.0-dev libnss3 libgconf-2-4 libasound2 \
+    libx11-6 libxext6 libsm6 libxrender1 libgl1 \
+    libglib2.0-0 libgtk2.0-dev libnss3 libasound2 \
     libxcomposite1 libxdamage1 x11-utils x11-xserver-utils \
     x11vnc xvfb fluxbox scrot unclutter xclip wget fonts-dejavu \
     novnc websockify tigervnc-standalone-server xterm \
@@ -40,4 +40,5 @@ RUN chmod +x /app/startup.sh
 EXPOSE 5901 6080
 
 # ------------------ Start Everything ------------------
-CMD ["/app/startup.sh"]
+ENTRYPOINT ["/app/startup.sh"]
+
