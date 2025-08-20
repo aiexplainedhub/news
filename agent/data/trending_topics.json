@@ -1,42 +1,68 @@
 {
-  "World": [
-    "Trending: Extension of U.S.–China tariff truce for 90 days, shifting investor focus to July U.S. CPI report",
-    "Evergreen: Ongoing blockade and famine in Gaza resulting in civilian deaths and widespread suffering",
-    "Opinion: Political debate over federalizing D.C. policing and deploying National Guard perceived by some as authoritarian overreach"
-  ],
-  "Politics": [
-    "Trending: Australia’s RBA cuts cash rate to 3.6% and major banks pass on relief to borrowers",
-    "Evergreen: Albanese’s recognition of a Palestinian state ignites debate and opposition backlash",
-    "Opinion: Controversy over Trump’s firing of the BLS head amid concerns about U.S. labor and inflation data integrity"
+  "Science": [
+    "No verified trending science news in past 48 hours",
+    "Evergreen: The science behind wildfire frequency and climate change",
+    "Evergreen: How heatwaves affect ecosystems across southern Europe",
+    "Evergreen: The role of climate modelling in predicting fire risks",
+    "Evergreen: Scientific tools used for early wildfire detection",
+    "Evergreen: The interplay between drought and fire susceptibility",
+    "Opinion: Climate events should prompt urgency, yet we remain complacent",
+    "Opinion: Ignoring wildfire science is negligent when heatwaves are so predictable",
+    "Opinion: Trend-spotting in science is less exciting than substantive preparation"
   ],
   "Business": [
-    "Trending: Global markets rally on softer U.S. inflation data, raising expectations of a Fed rate cut",
-    "Evergreen: Gold price outlook influenced by U.S. economic data and trade relations",
-    "Opinion: Elon Musk threatens legal action against Apple over perceived App Store antitrust abuses"
+    "US signals stability with China trade stance amid Trump-era tariffs talk (2025-08-20)",
+    "Global tourism powerhouses reaffirmed, including France (2025-08-20)",
+    "France among European nations benefiting from off-peak tourism boom (2025-08-20)",
+    "Evergreen: How tariffs influence global supply chains",
+    "Evergreen: The economic significance of tourism for national GDPs",
+    "Evergreen: Business cycles respond predictably to seasonality shifts",
+    "Opinion: The idea of off-peak travel being marketed as smarter is just savvy capitalism",
+    "Opinion: Tariff announcements always sound stabilising even when market anxiety persists",
+    "Opinion: Tourism lists make France sound like a consumer product rather than a culture"
   ],
   "Technology": [
-    "Trending: Chinese authorities urging companies to avoid Nvidia’s H20 chips",
-    "Evergreen: Expansion of U.S. assembly of privacy-focused smartphones by Unplugged in Nevada",
-    "Opinion: Deepening U.S.–China tech tensions raising concerns about global semiconductor supply chains"
-  ],
-  "Science": [
-    "Trending: OpenAI releases GPT-5 with claimed “PhD-level intelligence”, generating widespread attention",
-    "Evergreen: Researchers in Adelaide develop sunlight-activated process to break down PFAS into harmless fluoride",
-    "Opinion: Debate around implications of AI surpassing human-level reasoning and related ethical dilemmas"
+    "No verified trending technology news in past 48 hours",
+    "Evergreen: Understanding digital platform moderation challenges",
+    "Evergreen: Basics of livestreaming technology and its societal impact",
+    "Evergreen: How tech companies manage user-generated content for safety",
+    "Evergreen: The growth of live video broadcasting platforms",
+    "Evergreen: Privacy implications of livestreamed personal events",
+    "Opinion: Livestream tech is praised yet we ignore its privacy dangers at our peril",
+    "Opinion: It's naïve to assume platforms have users' best interests in livestream scenarios",
+    "Opinion: Technology enabling live tragedy feels dystopian and exploitative"
   ],
   "Health": [
-    "Trending: CDC issues Level-2 travel alert for UK, Germany and others due to circulating poliovirus",
-    "Evergreen: WorkSafeBC warns employers in Metro Vancouver amid persistent heat wave threats",
-    "Opinion: Questions persist about adequacy of public health infrastructure in responding to resurging infectious threats"
+    "No verified trending health news in past 48 hours",
+    "Evergreen: What is dengue and how is it managed?",
+    "Evergreen: Understanding mosquito-borne disease prevention strategies",
+    "Evergreen: The global burden of arboviral diseases explained",
+    "Evergreen: Key tools in dengue diagnostics and treatment",
+    "Evergreen: How public health campaigns reduce vector-borne diseases",
+    "Opinion: We only learn about dengue when outbreaks threaten travellers",
+    "Opinion: Health warnings are vital but too often forgotten once danger fades",
+    "Opinion: Facts about dengue are available but seldom heeded until it’s too late"
   ],
   "Entertainment": [
-    "Trending: Hypothetical dream golf match among LeBron James, Stephen Curry, and Michael Jordan sparks fan debate",
-    "Evergreen: Epic Games wins partial legal battle in Australia over app store practices",
-    "Opinion: Discussion around reality-star power versus traditional sports appeal in crossover events"
+    "No verified trending entertainment news in past 48 hours",
+    "Evergreen: What defines a film festival and why they matter",
+    "Evergreen: The evolution of global film markets and their influence",
+    "Evergreen: Festival calendars as essential tools for industry professionals",
+    "Evergreen: How film festivals shape cinematic trends",
+    "Evergreen: The cultural role of film festivals in showcasing diverse stories",
+    "Opinion: Film festivals feel like exclusive clubs for cinephiles and insiders",
+    "Opinion: We pretend festivals are about art when they're often about commerce",
+    "Opinion: Film market calendars are more about deal-making than discovery"
   ],
   "Sports": [
-    "Trending: England women’s team wins 2–1 against Italy in UEFA Women’s Euro 2025 semi-final with Chloe Kelly’s 119th-minute goal",
-    "Evergreen: ICC Chairman highlights strides in women’s cricket and gender equality in sports",
-    "Opinion: Speculation whether women's sports momentum will lead to structural investment and parity"
+    "No verified trending sports news in past 48 hours",
+    "Evergreen: How world-class athletes prepare for major competitions",
+    "Evergreen: The impact of major tournaments on host cities",
+    "Evergreen: Fundamentals of sports diplomacy and international events",
+    "Evergreen: How seasonality affects sports event scheduling",
+    "Evergreen: The economics of hosting global sporting events",
+    "Opinion: We obsess over sports even when nothing noteworthy happens",
+    "Opinion: Sports calendars are more about TV rights than human achievement",
+    "Opinion: Fans crave drama, yet often sports just offer business as usual"
   ]
 }

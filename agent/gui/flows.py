@@ -168,7 +168,7 @@ def run_agent(ctx, detector, agent, timeout_seconds=600, conf=0.6,
 
     # 4) Type + submit
     human_type(agent["prompt"])
-    time.sleep(0.2)
+    time.sleep(0.4)
     pyautogui.press("enter")
 
     # 5) Wait until ready appears again (submission completed) — save annotated frames

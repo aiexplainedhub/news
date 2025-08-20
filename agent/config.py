@@ -10,7 +10,7 @@ class Settings:
     display: str = os.getenv("DISPLAY", ":1")
     wp_site_url: str = os.getenv("WP_SITE_URL", "")
     wp_user: str = os.getenv("WP_USER", "")
-    wp_app_password: str = os.getenv("WP_APP_PASSWORD", "")
+    wp_app_password: str = os.getenv("WP_APP_PWD", "")
     default_image_url: str = os.getenv("DEFAULT_IMAGE_URL", "https://yourdomain.com/default-image.jpg")
     weights_path: str = os.getenv("YOLO_WEIGHTS", "models/best.pt")
 

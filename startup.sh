@@ -5,6 +5,8 @@ if [ -f "$LOCK_FILE" ]; then
     exit 0
 fi
 touch "$LOCK_FILE"
+trap 'rm -f "$LOCK_FILE"' EXIT   # clean up the lock on exit
+
 # Headless VNC + Fluxbox + Chrome bootstrap (reliable restart-ready version)
 
 set -u  # keep running even if Chrome fails; we want logs
@@ -17,6 +19,7 @@ RESOLUTION="${RESOLUTION:-2560x1440}"
 GEOMETRY="$RESOLUTION"
 USER_DATA_DIR="/app/chrome-profile"
 VNC_PASSWORD="${VNC_PASSWORD:-password}"
+export PYTHONUNBUFFERED="${PYTHONUNBUFFERED:-1}"   # stream Python prints immediately
 
 echo "📡 DISPLAY set to $DISPLAY"
 echo "🖥️  Resolution: $GEOMETRY"
@@ -121,8 +124,9 @@ else
 fi
 
 # ------------------ Your automation ------------------
-python3 -m agent.main >/root/agent.log 2>&1 &
-echo "🤖 agent/main.py started"
+# Stream Python output BOTH to console AND to file
+echo "🤖 Launching agent with console streaming (and /root/agent.log mirror)"
+python3 -u -m agent.main 2>&1 | tee -a /root/agent.log &
 
 # ------------------ noVNC proxy ------------------
 echo "🌐 Starting noVNC on http://localhost:6080"

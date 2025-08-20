@@ -77,10 +77,11 @@ Goal: Output production-ready **pure HTML** from finalized text. No SEO optimiza
 Inputs:
 - TITLE (string)
 - ARTICLE_TEXT (plain text; may contain simple markdown for emphasis/quotes but not links)
+- Optional header meta: {category}, {tags_csv}, {slug}
 Requirements:
 - Structure: <h1> TITLE; <h2> section headings (infer from obvious section markers if present); <p> paragraphs; <blockquote>/<cite> as needed.
 - Convert simple markdown emphasis/quotes if present; do not invent links.
-- header comments at top: <!-- category:  --> <!-- tags:  --> <!-- slug:  -->
+- Optional header comments at top if provided: <!-- category: {category} --> <!-- tags: {tags_csv} --> <!-- slug: {slug} -->
 - Keep paragraphs mobile-friendly; escape special characters safely.
 - Return **HTML only** (no Markdown, no explanations)."""
         },
@@ -89,9 +90,9 @@ Requirements:
             "name": "seo_optimizer",
             "prompt": """Role: Digital marketing strategist & on-page SEO editor for WordPress (Newspaper theme).
 Inputs:
-- ARTICLE_HTML: HTML output from article_publisher (previous output).
-- KEYPHRASE: primary keyphrase (from previous output).
--get inputs directly from the article_publisher output, previous output.
+- ARTICLE_HTML: HTML output from article_publisher (pre-internal-links).
+- KEYPHRASE: primary keyphrase (string).
+- Optional: SYNONYMS (comma-separated), CATEGORY, TAGS_CSV, EXTERNAL_SOURCES (array of reputable {title,url} candidates).
 Goal: Improve rankings and CTR while keeping content natural and accurate.
 Output: **Pure HTML only** (fully optimized). Use HTML comments for meta fields.
 Must-do SEO tasks:
@@ -114,8 +115,8 @@ Must-do SEO tasks:
    - If <img> tags exist, ensure descriptive alt text includes a natural keyphrase variant (human-readable, no stuffing). Do not add images.
 7) Readability & Voice:
    - Prefer active voice; tighten overly long sentences; keep mobile-friendly paragraphs. Do **not** change factual claims or quotes.
-8) Category/Tags:
-   - Add header comments: <!-- category:  --> <!-- tags:  --> <!-- keyphrase: ... -->
+8) Category/Tags (optional):
+   - If CATEGORY or TAGS_CSV provided, add header comments: <!-- category: {CATEGORY} --> <!-- tags: {TAGS_CSV} -->
 Safety/Integrity:
 - Preserve existing internal links; do not remove or duplicate anchors.
 - Do not invent facts; keep numbers and quotes intact.
@@ -124,39 +125,33 @@ Safety/Integrity:
         # Identify links AFTER seo_optimizer (plan only; no HTML edits)
         {
             "name": "internal_links_identifier",
-  "prompt": """Role: Internal links strategist (plan only; DO NOT edit HTML).
-Inputs you will receive:
+            "prompt": """Role: Internal links strategist (plan only; do NOT edit HTML).
+Inputs:
 - ARTICLE_HTML: the SEO-optimized HTML (output of seo_optimizer).
-- RELATED_INTERNALS: JSON exactly like related_internal_articles.json, e.g. {"related":[{"title","url","score","id"}, ...]}.
+- RELATED_INTERNALS: up to 3 items [{"title","url","score"}] from similarity search.
 - Optional KEYPHRASE (string) to bias anchor phrasing.
-
-Goal: Propose 0–3 internal links that genuinely add context. Produce a JSON plan ONLY.
-
+Goal: Produce a precise link plan (JSON).
 Rules:
-- Max 3 links total (~1 per 400–600 words).
-- Never link in the first paragraph; never link inside headings (<h1>, <h2>, ...).
-- Only include targets with score ≥ 0.6 AND clear topical match to the chosen paragraph.
-- Spread links across distinct sections; each URL at most once; no adjacent links.
-- Prefer natural noun-phrase anchor text. If KEYPHRASE fits naturally, use a synonym/variant (avoid exact-match stuffing).
-- If the article has no <h2> sections, treat the entire body as section_index = 0.
-- Do NOT summarize the article or restate inputs.
-
-Output (JSON only, no prose, no code fences):
+- Max 3 links total (~1 per 400–600 words). Never link in the first paragraph or in headings.
+- Only include a target if score ≥ {min_score:0.6} AND the paragraph topic clearly matches target article.
+- Prefer natural, noun-phrase anchors; avoid generic anchors ("click here").
+- Use synonyms/variants of KEYPHRASE where natural (avoid exact-match stuffing).
+- If the article has no <h2> sections, treat the entire body as section_index=0 for selector_hint.
+Output (JSON only, no prose):
 {
   "plan": [
     {
-      "target_url": "https://example.com/post-a",
+      "target_url": "...",
+      "reason": "why this target is relevant",
       "score": 0.73,
       "selector_hint": { "section_index": 2, "paragraph_index": 1 },
-      "anchor_text": "natural noun phrase in the paragraph",
-      "fallback_match": "short unique fragment to fuzzy-match if anchor_text not found",
-      "reason": "why this target deepens context here"
+      "anchor_text": "...",
+      "fallback_match": "short unique phrase to fuzzy-match in the paragraph"
     }
   ],
-  "notes": ["optional cautions or conflicts"]
+  "notes": ["any cautions or conflicts"]
 }
-If no suitable links, output: { "plan": [], "notes": ["none-suitable"] }"""
-
+If no suitable links, output { "plan": [], "notes": ["none-suitable"] }."""
         },
         # Apply the link plan to the post-SEO HTML
         {
@@ -178,8 +173,7 @@ Placement algorithm:
 4) If neither match is found, skip this item and insert an HTML comment immediately before the paragraph location: <!-- link-skip: reason -->.
 HTML safety:
 - Preserve existing anchors; do not break tags.
-- Keep rel attributes default for internal links (no nofollow).
-- If no LINK_PLAN provided, return ARTICLE_HTML unchanged."""
+- Keep rel attributes default for internal links (no nofollow)."""
         },
         {
             "name": "article_image_generator",

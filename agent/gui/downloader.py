@@ -20,10 +20,16 @@ def image_downloader(ctx):
         time.sleep(0.8)
         pyautogui.click()
         time.sleep(0.3)
+        #write allow pasting
+        for char in "allow pasting":
+            pyautogui.write(char)
+            time.sleep(0.1)
+        pyautogui.press('enter')
+        time.sleep(0.8)
 
+        # Paste the helper text
         helper_path = Path(__file__).resolve().parents[1] / "assets" / "image_downloader_helper.txt"
         content = helper_path.read_text(encoding="utf-8") if helper_path.exists() else ""
-        print(content)
         _paste(content)
         time.sleep(0.8)
         pyautogui.press('enter')
